@@ -1,6 +1,6 @@
 "use strict";
 
-const PATTERN = /^([0-9a-f]{8}-[0-9a-f]{4}-[1-6][0-9a-f]{3}-[0-9a-f]{4}-[0-9a-f]{12}|[0]{8}-[0]{4}-[0]{4}-[0]{4}-[0]{12})$/i;
+const PATTERN = /^([0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[0-9a-f]{4}-[0-9a-f]{12}|[0]{8}-[0]{4}-[0]{4}-[0]{4}-[0]{12})$/i;
 
 /**	Signature: function(value, field, parent, errors, context)
  */
@@ -21,7 +21,7 @@ module.exports = function({ schema, messages }, path) {
 		const version = val.charAt(14) | 0;
 	`);
 
-	if(parseInt(schema.version) < 7) {
+	if(parseInt(schema.version) < 9) {
 		src.push(`
 			if (${schema.version} !== version) {
 				${this.makeError({ type: "uuidVersion", expected: schema.version, actual: "version", messages })}
@@ -40,6 +40,8 @@ module.exports = function({ schema, messages }, path) {
 		case 3:
 		case 4:
 		case 5:
+  		case 7:
+		case 8:
 			if (["8", "9", "a", "b"].indexOf(val.charAt(19)) === -1) {
 				${this.makeError({ type: "uuid",  actual: "value", messages })}
 			}

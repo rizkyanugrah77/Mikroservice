@@ -6,45 +6,46 @@ const Validator = require('fastest-validator');
 const v = new Validator();
 
 module.exports = async (req, res) => {
-    // validate
     const schema = {
         email: 'email|empty:false',
-        password: 'string|min:6|empty:false',
+        password: "string|min:6"
     }
 
+    // vvalidasi
     const validate = v.validate(req.body, schema);
-    if (validate.lenght) {
+
+    if (validate.length) {
         return res.status(400).json({
-            status: 'error',
+            status: "error",
             message: validate
         });
     }
 
-    // if validate not error check data in database
+    // cek email
     const user = await User.findOne({
         where: {
             email: req.body.email
         }
     });
-    // if user not found
+
     if (!user) {
         return res.status(404).json({
-            status: 'error',
-            message: 'Email not found'
-        });
-    }
-    // if user found, check password
-    const inValidPassword = await bcrypt.compare(req.body.password, user.password /* array before hash and after hash */ )
-    if (!inValidPassword) {
-        return res.status(404).json({
-            status: 'error',
-            message: 'Invalid password'
+            status: "error",
+            message: "account not found"
         });
     }
 
-    // if all valid
+    // cek password
+    const isValidPassword = await bcrypt.compare(req.body.password, user.password);
+    if (!isValidPassword) {
+        return res.status(404).json({
+            status: "error",
+            message: "account not found"
+        });
+    }
+
     res.json({
-        status: 'success',
+        status: "success",
         data: {
             id: user.id,
             name: user.name,

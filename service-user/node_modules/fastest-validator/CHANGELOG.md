@@ -1,3 +1,10 @@
+<a name="1.19.1"></a>
+
+# 1.19.1 (2025-04-30)
+
+## Changes
+- fix false negative check on UUID v7 and v8 [#351](https://github.com/icebob/fastest-validator/pull/351)
+
 <a name="1.19.0"></a>
 
 # 1.19.0 (2024-07-28)
@@ -6,7 +13,7 @@
 - shorthand label hotfix. [#345](https://github.com/icebob/fastest-validator/pull/345)
 - fix deprecated substr. [#346](https://github.com/icebob/fastest-validator/pull/346)
 - improved custom function with array and global custom functions. [More info](https://github.com/icebob/fastest-validator?tab=readme-ov-file#chaining-custom-functions-and-global-definitions) [#332](https://github.com/icebob/fastest-validator/pull/332)
-- 
+ 
 <a name="1.18.0"></a>
 
 # 1.18.0 (2024-04-21)

@@ -7,13 +7,14 @@ const v = new Validator();
 
 module.exports = async (req, res) => {
     const schema = {
-        name: 'string|required:true',
-        email: 'string|required:true|email',
-        password: 'string|min:6|required:true',
+        name: 'string|empty:false',
+        email: 'email|empty:false',
+        password: 'string|min:6',
         profession: 'string|optional',
-        avatar: 'string|optional',
-    };
-        // Validate
+        avatar: 'string|optional'
+    }
+
+    // vvalidasi
     const validate = v.validate(req.body, schema);
     if (validate.length) {
         return res.status(400).json({
@@ -21,16 +22,17 @@ module.exports = async (req, res) => {
             message: validate
         });
     }
-
+    // check user
     const id = req.params.id;
     const user = await User.findByPk(id);
     if (!user) {
         return res.status(404).json({
-            status: 'error',
-            message: 'User not found'
+            status: "error",
+            message: 'user not found'
         });
     }
-    // email validation
+
+    // check email
     const email = req.body.email;
     if (email) {
         const checkEmail = await User.findOne({
@@ -41,24 +43,23 @@ module.exports = async (req, res) => {
 
         if (checkEmail && email !== user.email) {
             return res.status(409).json({
-                status: 'error',
-                message: 'Email already exists'
+                status: "error",
+                message: "email already exist"
             });
         }
     }
 
-    // check password
-    const password = await bcrypt.hash(req.body.password, 10);
-   
+    const password = await bcrypt.hash(req.body.password, 15);
     const {
-        name, profession, avatar
+        name,
+        profession,
+        avatar
     } = req.body;
 
-    // all validation succes
     await user.update({
-        name,
         email,
         password,
+        name,
         profession,
         avatar
     });
@@ -67,10 +68,11 @@ module.exports = async (req, res) => {
         status: 'success',
         data: {
             id: user.id,
-            name: user.name,
-            email: user.email,
-            profession: user.profession,
-            avatar: user.avatar
+            name,
+            email,
+            profession,
+            avatar
         }
     });
+
 }

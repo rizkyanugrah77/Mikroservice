@@ -558,7 +558,7 @@ export interface RuleUUID extends RuleCustom {
 	/**
 	 * UUID version in range 0-6
 	 */
-	version?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
+	version?: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
 }
 
 export interface RuleObjectID extends RuleCustom {
