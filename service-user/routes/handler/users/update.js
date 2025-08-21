@@ -26,7 +26,7 @@ module.exports = async (req, res) => {
     const id = req.params.id;
     const user = await User.findByPk(id);
     if (!user) {
-        return res.status(404).json({
+        return res.status(404).json({                           
             status: "error",
             message: 'user not found'
         });
@@ -40,6 +40,7 @@ module.exports = async (req, res) => {
                 email
             }
         });
+
 
         if (checkEmail && email !== user.email) {
             return res.status(409).json({

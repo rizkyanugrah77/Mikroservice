@@ -33,7 +33,7 @@ module.exports = {
     await queryInterface.addConstraint('refresh_tokens', {
       type: 'foreign key',
       fields:['user_id'],
-      name: 'REFRESH_TOKENS__USER_ID',
+      name: 'REFRESH_TOKENS_USER_ID',
       references:{
         table: 'users',
         field: 'id'
