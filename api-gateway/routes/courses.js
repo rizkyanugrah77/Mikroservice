@@ -1,15 +1,17 @@
 const express = require('express');
 const router = express.Router();
 
-// const usersHandler = require('./handler/courses');
-
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'courses' });
-});
+const coursesHandler = require('./handler/courses');
+const verifyToken = require('../middlewares/verifyToken');
 
 
-// router.post('/register', usersHandler.register);
-// router.post('/login', usersHandler.login);
+router.get('/', coursesHandler.getAll);
+router.get('/:id', coursesHandler.get);
+
+
+router.post('/', verifyToken, coursesHandler.create);
+router.put('/:id', verifyToken, coursesHandler.update);
+router.delete('/:id', verifyToken, coursesHandler.destroy);
+
 
 module.exports = router;
- 

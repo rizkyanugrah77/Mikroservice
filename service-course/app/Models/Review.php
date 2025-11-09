@@ -8,12 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class Review extends Model
 {
     use HasFactory;
-        protected $table = 'revies';
+        protected $table = 'reviews';
+         protected $casts = [
+        'created_at' => 'datetime:Y-m-d H:m:s',
+           'updated_at' => 'datetime:Y-m-d H:m:s'
+     ];
     protected $fillable = [
         'user_id', 'course_id', 'rating', 'note'
     ];
 
     public function course(){
-        return $this->belongsTo('App\Course');
+        return $this->belongsTo(Course::class, 'course_id', 'id');
     }
 }
